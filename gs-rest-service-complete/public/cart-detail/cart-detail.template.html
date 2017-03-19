@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">      
+      <button type="submit" class="pure-button pure-input-1 pure-button-primary" ng-click="$ctrl.submitOrder()">Submit Order</button>
+      <br/><br/>
+      <a href="#!/phones">Add more items</a>           
+    </div>
+  
+   <div class="col-md-10">
+      <!--Body content-->
+	  <h2>Contents of the cart</h2>
+      <ul class="phones">
+        <li ng-repeat="phone in $ctrl.phones" class="thumbnail phone-list-item">
+          <a href="#!/phones/{{phone.id}}" class="thumb">
+            <img ng-src="{{phone.imageUrl}}" alt="{{phone.name}}" />
+          </a>
+          <a href="#!/phones/{{phone.id}}">{{phone.name}}</a>
+		  <p> {{phone.snippet}}
+          <div>
+          	<label for="selected_quantity">Quantity: </label>
+            <input id="selected_quantity" ng-model="phone.selectedQuantity" type="number" min="0" max="{{phone.quantity}}" step="1" />
+ 
+            <button class="list-button" ng-click="$ctrl.removeFromCart(phone)">Remove from cart</button>
+	      </div>  
+        </li>
+      </ul>
+    </div>
+        
+  </div>
+</div>
