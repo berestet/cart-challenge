@@ -35,18 +35,16 @@ The REST web services are based on Spring MVC and JSON. The unit tests are made 
 
 
 Users REST API
------------------------------------------------------------------------------------
+--------------
 /users          |  GET  | Get a list of registered users
 /users/:userId  |  GET  | Get user that matches {userId} path parameter
 /users/login    | POST  | Authenticate the user
------------------------------------------------------------------------------------
 
 Phones REST API
------------------------------------------------------------------------------------
+---------------
 /phones/list          |  GET  | Get a list of all phones in the database
 /phones/list/:phoneId |  GET  | Get phone that matches {phoneId} path parameter
 /phones/order         | POST  | Submit user order that contains one or more phones
------------------------------------------------------------------------------------
 
 
 Frontend validation is for user convenience only, more robust validation logic was also added to the backend. The use of Angular gives good protection against common problems like cross-site scripting or HTML injection. 
