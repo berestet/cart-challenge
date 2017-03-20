@@ -33,4 +33,8 @@ The backend is based on Java 8, Spring MVC, MongoDB. The Spring configuration is
 
 The REST web services are based on Spring MVC and JSON. The unit tests are made with spring test and the REST API functional tests where made using Spring test MVC.
 
-Limited frontend validation can be enhanced and is for user convenience only, more robust validation logic was also added to the backend. The use of Angular gives good protection against common problems like cross-site scripting or HTML injection. The queries on the backend are made using either named queries or the criteria API, which gives good protection against SQL injection.
+Frontend validation is for user convenience only, more robust validation logic was also added to the backend. The use of Angular gives good protection against common problems like cross-site scripting or HTML injection. 
+
+Test Automation
+Front end tests cover mostly controller logic and use Karma + Jasmine
+Back end test drive SpringMVC controllers via SpringBootTest framework
