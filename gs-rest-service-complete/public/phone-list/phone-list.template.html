@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="welcome-title" >
-  	 <span style="text-align: right; font-size: 90%;"> Welcome {{$ctrl.currentUser}} to our store </span>
+  	 <span style="text-align: right; font-size: 90%;"> Welcome "{{$ctrl.currentUser}}" to our store </span>
   </div>
   <div class="row">
     <div class="col-md-2">
@@ -19,10 +19,10 @@
         </select>
       </p>
       
-      <a href="#!/cart">View Cart</a>
+      <a href="#!/order/details">View Cart</a>
       
       <br/><br/>
-      <span style="font-size: 75%; color: blue; display: {{$ctrl.addItemMessageVisibility}}"> {{$ctrl.addItemMessage}} phones have been added to your cart. Follow view cart link for complete cart contents.</span>
+      <span style="font-size: 75%; color: blue; display: {{$ctrl.addItemMessageVisibility}}"> {{$ctrl.addItemMessage}} </span>
 
       
     </div>

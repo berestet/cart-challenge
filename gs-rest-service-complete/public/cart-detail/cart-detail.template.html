@@ -1,9 +1,15 @@
 <div class="container-fluid">
+  <div class="welcome-title" >
+  	 <span style="text-align: right; font-size: 90%;"> Welcome "{{$ctrl.currentUser}}" to our store </span>
+  </div>
   <div class="row">
     <div class="col-md-2">      
       <button type="submit" class="pure-button pure-input-1 pure-button-primary" ng-click="$ctrl.submitOrder()">Submit Order</button>
       <br/><br/>
-      <a href="#!/phones">Add more items</a>           
+      <a href="#!/phones">Add more items</a> 
+      
+      <br/><br/>
+      <span style="font-size: 75%; color: blue; display: {{$ctrl.addItemMessageVisibility}}"> {{$ctrl.addItemMessage}} </span>                
     </div>
   
    <div class="col-md-10">
@@ -18,7 +24,7 @@
 		  <p> {{phone.snippet}}
           <div>
           	<label for="selected_quantity">Quantity: </label>
-            <input id="selected_quantity" ng-model="phone.selectedQuantity" type="number" min="0" max="{{phone.quantity}}" step="1" />
+            <input id="selected_quantity" ng-model="phone.selectedQuantity" ng-change="$ctrl.quantityChanged(phone)" type="number" min="0" max="{{phone.quantity}}" step="1" />
  
             <button class="list-button" ng-click="$ctrl.removeFromCart(phone)">Remove from cart</button>
 	      </div>  

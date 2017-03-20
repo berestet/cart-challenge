@@ -13,13 +13,15 @@ angular.
         when('/phones', {
           template: '<phone-list></phone-list>'
         }).
-        when('/cart', {
+        when('/order/details', {
           template: '<cart-detail></cart-detail>'
-        }).
-        
+        }).        
         when('/phones/:phoneId', {
           template: '<phone-detail></phone-detail>'
         }).
+        when('/order/confirmation', {
+            template: '<order-confirmation></order-confirmation>'
+          }).
         otherwise('/login');
     }
   ]);

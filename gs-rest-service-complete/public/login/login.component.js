@@ -45,8 +45,8 @@ angular.
 	        
 		    self.login = function login() {
 		    	var postData = self.preparePostData();
-			    console.error("Login Details are: " + postData);
-			    console.error("Login URL: " + loginUrl);
+			    console.log("Login Details are: " + postData);
+			    console.log("Login URL: " + loginUrl);
 
                 $http({
                     method: 'POST',
@@ -57,13 +57,14 @@ angular.
                     }
                 })
                 .then(function (response) {
+                	self.loginResponse = response.data; // for testing
                     if (response.status == 200) {
                     	switch( response.data ) {
                         	case AuthenticationReturnCode.NO_MATCHING_USER:
-                        		console.error("Autentication Failure: " + authenticationReturnCode.NO_MATCHING_USER);
+                        		console.log("Autentication Failure: " + authenticationReturnCode.NO_MATCHING_USER);
                         		return;
                         	case AuthenticationReturnCode.PASSWORD_DOES_NOT_MATCH:
-                        		console.error("Autentication Failure: " + authenticationReturnCode.PASSWORD_DOES_NOT_MATCH);                        		
+                        		console.log("Autentication Failure: " + authenticationReturnCode.PASSWORD_DOES_NOT_MATCH);                        		
                         		return;
                         	case AuthenticationReturnCode.SUCCESS:
                             	console.log("Phone list URL: " + phoneListUrl);                            	
@@ -73,9 +74,7 @@ angular.
                     	}
                     }                    	
                     else {
-                    	self.details = response.data;
-                    	console.error("Error response details: " + self.details);
-                    	// deferred.reject("Error saving order: " + response.data);
+                    	console.log("Error response details: " + self.loginResponse);
                     }
                 });
 			}; // end submitOrder

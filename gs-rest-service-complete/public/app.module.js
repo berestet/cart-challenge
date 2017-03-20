@@ -8,5 +8,6 @@ angular.module('phonecatApp', [
   'login',
   'cartDetail',
   'phoneDetail',
-  'phoneList'
+  'phoneList',
+  'orderConfirmation'
 ]);

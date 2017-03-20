@@ -16,15 +16,26 @@ angular.
 		    
 	    $http.get(listPhonesUrl).then(function(response) {
 	      self.phones = response.data;
-	      console.error("Got back list of phones: " + self.phones);
+	      console.log("Got back list of phones: " + self.phones);
+	      
+	      // initialize selectedQuantity to '0' for each phone in the list
+	      self.phones.forEach(function(phone){
+	    	  phone.selectedQuantity = 0;
+	      });
 	    });
 	    
 	    self.addToCart = function addToCart(phone) {
-	          console.error("Add to cart: " + phone.selectedQuantity + " of " + phone.id);	          
-	          SelectedItems.addItem(phone);
+	          console.log("Add to cart: " + phone.selectedQuantity + " of " + phone.id);
+	          self.addItemMessageVisibility = "none";
+	          
+	          if( (phone.selectedQuantity == null) || (phone.selectedQuantity <= 0) || (phone.selectedQuantity > phone.quantity) ) {
+		          self.addItemMessage = "You specified invalid quantity of \"" + phone.name + "\". Please specify valid quantity then Add to your cart";
+	          } else {	          
+	        	  SelectedItems.addItem(phone);
+		          self.addItemMessage = phone.selectedQuantity + '  \"' + phone.name + "\" phones have been added to your cart. Follow \"view cart\" link for complete cart contents.";
+	          }
 	          
 	          self.addItemMessageVisibility = "block";
-	          self.addItemMessage = phone.selectedQuantity + '  ' + phone.name;
 	    }
         
 	  }]

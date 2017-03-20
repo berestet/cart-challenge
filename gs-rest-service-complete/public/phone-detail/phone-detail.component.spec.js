@@ -1,35 +1,36 @@
 'use strict';
 
-describe('phoneDetail', function() {
+describe('phoneList', function() {
 
-  // Load the module that contains the `phoneDetail` component before each test
-  beforeEach(module('phoneDetail'));
+  // Load the module that contains the `phoneList` component before each test
+  beforeEach(module('phoneList'));
 
   // Test the controller
-  describe('PhoneDetailController', function() {
-    var $httpBackend, ctrl;
-    var xyzPhoneData = {
-      name: 'phone xyz',
-      images: ['image/url1.png', 'image/url2.png']
-    };
+  describe('PhoneListController', function() {
+    var $httpBackend, ctrl, selectedItems;
 
-    beforeEach(inject(function($componentController, _$httpBackend_, $routeParams) {
+    beforeEach(inject(function($componentController, _$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('phones/xyz.json').respond(xyzPhoneData);
+      $httpBackend.expectGET('http://localhost:8080/phones/list')
+                  .respond([{name: 'Nexus S'}, {name: 'Motorola DROID'}]);
 
-      $routeParams.phoneId = 'xyz';
+      ctrl = $componentController('phoneList');
+     }));
 
-      ctrl = $componentController('phoneDetail');
-    }));
-
-    it('should fetch the phone details', function() {
+    it('should create a `phones` property with 2 phones fetched with `$http`', function() {
       jasmine.addCustomEqualityTester(angular.equals);
 
-      expect(ctrl.phone).toEqual({});
+      expect(ctrl.phones).toBeUndefined();
 
       $httpBackend.flush();
-      expect(ctrl.phone).toEqual(xyzPhoneData);
+      expect(ctrl.phones.length).toBe(2);
+      expect(ctrl.phones).toEqual([{name: 'Nexus S'}, {name: 'Motorola DROID'}]);
     });
+
+    it('should set a default value for the `orderProp` property', function() {
+      expect(ctrl.orderProp).toBe('age');
+    });
+
 
   });
 

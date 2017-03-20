@@ -52,6 +52,10 @@ public class PhoneController {
     @ResponseStatus(HttpStatus.OK)    
     @RequestMapping(method = RequestMethod.POST, value = "/order")
     public OrderStatus addOrder(@RequestBody Order order) {
+    	if( order.getPhoneList().isEmpty() ) {
+    		return OrderStatus.ERROR_INVALID_ITEM;
+    	}
+    	
     	return phoneService.addOrder(order);
     }    
     

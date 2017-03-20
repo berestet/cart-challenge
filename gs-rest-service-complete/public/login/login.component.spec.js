@@ -1,35 +1,38 @@
 'use strict';
 
-describe('phoneDetail', function() {
+describe('login', function() {
 
-  // Load the module that contains the `phoneDetail` component before each test
-  beforeEach(module('phoneDetail'));
+  // Load the module that contains the `login` component before each test
+  beforeEach(module('login'));
 
   // Test the controller
-  describe('PhoneDetailController', function() {
+  describe('LoginController', function() {
     var $httpBackend, ctrl;
-    var xyzPhoneData = {
-      name: 'phone xyz',
-      images: ['image/url1.png', 'image/url2.png']
+    var userData = {
+      userId: 'test123',
+      password: 'Password0'
     };
 
-    beforeEach(inject(function($componentController, _$httpBackend_, $routeParams) {
+    beforeEach(inject(function($componentController, _$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('phones/xyz.json').respond(xyzPhoneData);
+      $httpBackend.expectPOST('http://localhost:8080/users/login')
+                  .respond(200, "AUTHENTICATION_SUCCESSFUL");
 
-      $routeParams.phoneId = 'xyz';
-
-      ctrl = $componentController('phoneDetail');
+      ctrl = $componentController('login');
     }));
 
-    it('should fetch the phone details', function() {
-      jasmine.addCustomEqualityTester(angular.equals);
 
-      expect(ctrl.phone).toEqual({});
+   it('should login user test123/Password0', function() {
+    jasmine.addCustomEqualityTester(angular.equals);
 
-      $httpBackend.flush();
-      expect(ctrl.phone).toEqual(xyzPhoneData);
-    });
+    ctrl.user = userData;
+
+    ctrl.login();
+
+    $httpBackend.flush();
+
+    expect(ctrl.loginResponse).toBe("AUTHENTICATION_SUCCESSFUL");
+   });
 
   });
 
