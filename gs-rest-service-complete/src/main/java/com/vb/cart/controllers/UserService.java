@@ -1,5 +1,6 @@
 package com.vb.cart.controllers;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,30 @@ public class UserService {
         return AuthenticationStatus.NO_MATCHING_USER;
     }
 
-	
+    @Transactional(readOnly = true)
+    public List<User> listUsers() {
+		return userRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public User findUser(String userId) {
+    	return userRepository.findByUserId(userId);
+    }
+
+    
+    @Transactional
+    public String populateUsers() {
+    	userRepository.deleteAll();
+
+		// create initial set of users
+    	userRepository.save(new User("test123", "Password0", "Generic", "Generic"));
+    	userRepository.save(new User("alice@hotmail.com", "Password1", "Alice", "Bass"));
+    	userRepository.save(new User("bob@hotmail.com", "Password2","Bob", "Smith"));
+    	userRepository.save(new User("allan@hotmail.com", "Password3", "Allan", "Turing"));
+		
+        return "User repostiory is populated";
+    }
+    
 	
 	
 }

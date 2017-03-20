@@ -20,41 +20,28 @@ import com.vb.cart.model.User;
 @RequestMapping("/users")
 public class UserController {
 
-	@Autowired
-	private UserRepository repository;
 	
     @Autowired
     UserService userService;
 
-    
 
     @RequestMapping(method = RequestMethod.GET, value = "/populate")
-    public String populateUsers() {
-		repository.deleteAll();
-
-		// create initial set of users
-		repository.save(new User("test123", "Password0", "Generic", "Generic"));
-		repository.save(new User("alice@hotmail.com", "Password1", "Alice", "Bass"));
-		repository.save(new User("bob@hotmail.com", "Password2","Bob", "Smith"));
-		repository.save(new User("allan@hotmail.com", "Password3", "Allan", "Turing"));
-		
-        return "User repostiory is populated";
+    public String populateUsers() {		
+        return userService.populateUsers();
     }
 
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)    
     @RequestMapping(method = RequestMethod.GET)
     public List<User> listUsers() {
-		return repository.findAll();
+		return userService.listUsers();
     }
 
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
     public User findUser(@PathVariable String userId) {
-    	User user = repository.findByUserId(userId);
-    	
-        return user;
+    	return userService.findUser(userId);
     }
 
     @ResponseBody

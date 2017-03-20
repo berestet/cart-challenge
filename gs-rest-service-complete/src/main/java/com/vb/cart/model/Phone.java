@@ -18,6 +18,11 @@ public class Phone {
 		this.quantity = quantity;
 	}
 
+	public Phone(String id, int quantity) {
+		this.id = id;
+		this.quantity = quantity;
+	}
+
 	public Phone() {}
 	
     public String getId() {
