@@ -9,6 +9,8 @@ angular.
 	    function LoginController($http, $routeParams, SelectedItems) {
 		    const loginUrl = 'http://localhost:8080/users/login';
 		    const phoneListUrl = 'http://localhost:8080/index.html#!/phones';
+		    const pendingOrderUrl = 'http://localhost:8080/users/pendingOrder/';
+
 		    var AuthenticationReturnCode = { SUCCESS: "AUTHENTICATION_SUCCESSFUL", 
 		    							     NO_MATCHING_USER: "NO_MATCHING_USER", 
 		    							     PASSWORD_DOES_NOT_MATCH: "PASSWORD_DOES_NOT_MATCH"
@@ -16,7 +18,7 @@ angular.
 		    
 			var self = this;
 			var fieldWithFocus;
-			
+						
 			self.user = {
 					userId: '',
 					password: ''
@@ -69,6 +71,10 @@ angular.
                         	case AuthenticationReturnCode.SUCCESS:
                             	console.log("Phone list URL: " + phoneListUrl);                            	
                             	SelectedItems.setCurrentUser(self.user.userId);
+                            	
+                            	// @pendingOrder enable for loading pending orders
+                            	// self.checkPendingOrderAndLoad(self.user.userId);
+                            	
                             	window.location.replace(phoneListUrl);
                         		return;
                     	}
@@ -77,8 +83,30 @@ angular.
                     	console.log("Error response details: " + self.loginResponse);
                     }
                 });
-			}; // end submitOrder
+			}; // end login
 
+			// Check if pending order for userId exists in the database.
+			// If so, load it in the session and delete from the database.
+	        self.checkPendingOrderAndLoad = function checkPendingOrderAndLoad(userId) {
+	    	    $http.get(pendingOrderUrl + userId).then(function(response) {
+                    if (response.status == 200) {
+                    	self.pendingOrder = response.data;
+                    	self.phones = self.pendingOrder.phoneList;
+                    	console.log("Got following phones from pending order: " + self.phones);
+                    	
+                    	self.phones.forEach(function(phone) {
+                    		phone.selectedQuantity = phone.quantity;
+                    		phone.name = phone.id;
+                    		
+                    		// TODO: lookup and populate phone details from the list of phones
+                    		
+                    		SelectedItems.addItem(phone);                    		
+                    	});                    	
+                    }
+	    		});
+
+	        }; // end checkPendingOrderAndLoad
+			
 	    }]
 	});
 	      	        

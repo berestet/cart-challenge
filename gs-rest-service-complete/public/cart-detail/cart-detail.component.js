@@ -50,7 +50,7 @@ angular.
 		    // Construct JSON for the order
 		    self.constructOrderJSON = function constructOrderJSON() {
 			    var phonesListJSON = JSON.stringify(self.phones.map(function(phone) {
-						return { id: phone.id, quantity: phone.selectedQuantity};		    	
+						return { id: phone.id, name: phone.name, quantity: phone.selectedQuantity};		    	
 		    		})
 			    );		    
 		    		
@@ -135,6 +135,13 @@ angular.
                     }
                 });
             }; // end preparePhonesDto()
+            
+    	    // Make sure that order details and current user are cleared
+    	    self.logout = function logout() {
+    	    	SelectedItems.clearSelectedItems();
+    	    	SelectedItems.clearCurrentUser();
+    		}; // logout()
+
 			
 	    }]
 	});

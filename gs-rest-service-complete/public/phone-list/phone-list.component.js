@@ -15,13 +15,17 @@ angular.
 	    self.addItemMessage = "";
 		    
 	    $http.get(listPhonesUrl).then(function(response) {
-	      self.phones = response.data;
-	      console.log("Got back list of phones: " + self.phones);
-	      
-	      // initialize selectedQuantity to '0' for each phone in the list
-	      self.phones.forEach(function(phone){
-	    	  phone.selectedQuantity = 0;
-	      });
+	    	if (response.status == 200) {
+		      self.phones = response.data;
+		      console.log("Got back a list of " + self.phones.length + " phones");
+		      
+		      // initialize selectedQuantity to '0' for each phone in the list
+		      self.phones.forEach(function(phone){
+		    	  phone.selectedQuantity = 0;
+		      });
+	    	} else {
+	    		console.log("Could not succesffuly retrieve list of phones. Bad response status: " + response.status);
+	    	}
 	    });
 	    
 	    self.addToCart = function addToCart(phone) {
@@ -36,8 +40,15 @@ angular.
 	          }
 	          
 	          self.addItemMessageVisibility = "block";
-	    }
-        
+	    };
+	    
+	    // Make sure that order details and current user are cleared
+	    self.logout = function logout() {
+	    	SelectedItems.clearSelectedItems();
+	    	SelectedItems.clearCurrentUser();
+		};
+
+		
 	  }]
 	});
 

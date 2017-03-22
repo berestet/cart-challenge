@@ -35,11 +35,20 @@
     <script src="order-confirmation/order-confirmation.module.js"></script>
     <script src="order-confirmation/order-confirmation.component.js"></script>
         
+    <script>
+    	window.addEventListener("beforeunload", function (e) {
+    		console.log("Handling event: " + e.type);
+    		var isPhonecatAppAlive = angular.element(document.getElementById("PhonecatAppDivId"));
+    		if( isPhonecatAppAlive != null) {    	                             							 
+	      		angular.element(document.getElementById("PhonecatAppDivId")).scope().handleScopeDestroy();
+    		}
+    	});    
+    </script>    
   </head>
   <body>
 
     <div class="view-container">
-      <div ng-view class="view-frame"></div>
+      <div id="PhonecatAppDivId" ng-view ng-controller="PhonecatAppController" class="view-frame"></div>
     </div>
 
   </body>

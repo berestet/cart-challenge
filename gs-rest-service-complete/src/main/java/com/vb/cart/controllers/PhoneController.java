@@ -1,7 +1,6 @@
 package com.vb.cart.controllers;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +21,6 @@ import com.vb.cart.model.Phone;
 @RestController
 @RequestMapping("/phones")
 public class PhoneController {
-
-    private final AtomicLong counter = new AtomicLong();
         
     @Autowired
     PhoneService phoneService;
@@ -34,20 +31,35 @@ public class PhoneController {
     	return phoneService.populatePhoneRepository();
     }
    
-    
+    /**
+     * Get list of all phones in the database
+     * 
+     * @return List<Phone>
+     */
     @ResponseStatus(HttpStatus.OK)    
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public List<Phone> listAllPhones() {
         return phoneService.listAllPhones();
     }
 
-    
+    /**
+     * Find phone by phoneId in the database
+     * 
+     * @param phoneId
+     * @return Phone
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/list/{phoneId}")
     public Phone findPhone(@PathVariable String phoneId) {    	
         return phoneService.findPhone(phoneId);
     }
 
-
+    /**
+     * Add a new order to the OrderRepository. 
+     * orderId must be unique.
+     * 
+     * @param order
+     * @return OrderStatus
+     */
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)    
     @RequestMapping(method = RequestMethod.POST, value = "/order")

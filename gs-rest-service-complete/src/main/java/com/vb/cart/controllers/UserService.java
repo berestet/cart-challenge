@@ -6,7 +6,9 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.vb.cart.model.PendingOrder;
 import com.vb.cart.model.User;
 
 /**
@@ -26,6 +28,9 @@ public class UserService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PendingOrderRepository pendingOrderRepository;
 
     
     /**
@@ -58,6 +63,30 @@ public class UserService {
     	return userRepository.findByUserId(userId);
     }
 
+    @Transactional
+    public void savePendingOrder(PendingOrder order) {  		
+		pendingOrderRepository.save(order);		
+    }
+
+    @Transactional(readOnly = true)
+    public PendingOrder getPendingOrder(String userId) {
+    	return pendingOrderRepository.findByUserId(userId);
+    }
+    
+    @Transactional
+    public void deletePendingOrder(String userId) {
+    	PendingOrder order = pendingOrderRepository.findByUserId(userId);
+    	if( null != order ) {
+    		pendingOrderRepository.delete(order);
+    	}
+    }
+
+    @Transactional
+    public void deletePendingOrder(PendingOrder order) {
+    	if( null != order ) {
+    		pendingOrderRepository.delete(order);
+    	}
+    }
     
     @Transactional
     public String populateUsers() {
