@@ -1,5 +1,5 @@
 *.cert
 *.key
-*.class
+**/*.class
 .settings
 .project
