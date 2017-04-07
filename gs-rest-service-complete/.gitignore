@@ -1,0 +1,5 @@
+*.cert
+*.key
+*.class
+.settings
+.project
