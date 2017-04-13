@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">      
+      <a href="#!/phones" ng-click="$ctrl.clearOrderDetails()">Continue Shopping</a> 
+      <br/><br/>      
+      <a href="#!/login" ng-click="$ctrl.logout()">Logout</a> 
+      
+      <br/><br/>
+      <span style="font-size: 75%; color: blue; display: {{$ctrl.addItemMessageVisibility}}"> {{$ctrl.addItemMessage}} </span>                
+    </div>
+  
+   <div class="col-md-10">
+      <!--Body content-->
+	  <h2>Well done {{$ctrl.currentUser}}! Your order has been successfully submitted for fulfillment as per details below. Confirmation e-mail will be sent to you shortly.</h2>
+      <ul class="phones">
+        <li ng-repeat="phone in $ctrl.phones" class="thumbnail phone-list-item" style="height: 75px">
+          <a href="#!/phones/{{phone.id}}">{{phone.name}}</a>
+          <br/>
+		  <span> Quantity: {{phone.selectedQuantity}} </span>
+        </li>
+      </ul>
+    </div>
+        
+  </div>
+</div>
